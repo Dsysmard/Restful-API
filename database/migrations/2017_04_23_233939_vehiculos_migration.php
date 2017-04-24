@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVehiculosTable extends Migration {
+class VehiculosMigration extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,7 +14,13 @@ class CreateVehiculosTable extends Migration {
 	{
 		Schema::create('vehiculos', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('serie');
+			$table->string('color');
+			$table->float('cilindraje');
+			$table->integer('potencia');
+			$table->float('peso');
+			$table->integer('fabricante_id')->unsigned();
+			$table->foreign('fabricante_id')->references('id')->on('fabricantes');
 			$table->timestamps();
 		});
 	}
