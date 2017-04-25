@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Vehiculo;
 use Illuminate\Http\Request;
 
-class FabricanteVehiculoController extends Controller {
+class VehiculoController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
