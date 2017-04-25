@@ -36,7 +36,7 @@ class FabricanteController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		return 'recibiendo datos';
 	}
 
 	/**
