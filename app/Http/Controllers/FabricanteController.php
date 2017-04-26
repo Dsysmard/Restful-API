@@ -9,7 +9,7 @@ class FabricanteController extends Controller {
 
 	public function __construct()
 	{
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+		$this->middleware('auth.basic.once',['only'=>['store','update','destroy']]);
 	}
 
 	/**
@@ -71,11 +71,13 @@ class FabricanteController extends Controller {
 		}
 		if ($metodo === 'PATCH') 
 		{
+			$bandera = false;
 			$nombre = $request->input('nombre');
 
 			if ($nombre != null && $nombre !='') 
 			{
 				$fabricante->nombre = $nombre;
+				$bandera = true;
 			}
 
 			$telefono = $request->input('telefono');
@@ -83,11 +85,16 @@ class FabricanteController extends Controller {
 			if ($telefono != null && $telefono !='') 
 			{
 				$fabricante->telefono = $telefono;
+				$bandera = true;
 			}
-
-			$fabricante->save();
-			return response()->json(['mensaje' => 'Fabricante editado'],200);
+			
+			if ($bandera) {
+				$fabricante->save();
+				return response()->json(['mensaje' => 'Fabricante editado'],200);
+			}
+			return response()->json(['mensaje' => 'No se modifico ningun fabricante'],200);
 		}
+
 		$nombre = $request->input('nombre');
 		$telefono = $request->input('telefono');
 		
@@ -109,7 +116,7 @@ class FabricanteController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		return "Estoy en destroy";
+		
 	}
 
 }

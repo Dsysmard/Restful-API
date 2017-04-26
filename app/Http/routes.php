@@ -11,7 +11,16 @@
 |
 */
 Route::resource('vehiculos','VehiculoController',['only' => ['index','show']]);
-Route::resource('fabricantes','FabricanteController');
-Route::resource('fabricantes.vehiculos','FabricanteVehiculoController', ['except' => ['show']]);
+Route::resource('fabricantes','FabricanteController', ['except' => ['edit','create']]);
+Route::resource('fabricantes.vehiculos','FabricanteVehiculoController', ['except' => ['show', 'edit', 'create']]);
+
+Route::pattern('inexistentes', '.*');
+
+Route::any('/{inexistentes}', function
+	()
+	{
+		return response()->json(['mesaje' => 'Rutas o metodos incorrectos :', 'Codigo' => 400],400);
+	}
+	);
 
 
