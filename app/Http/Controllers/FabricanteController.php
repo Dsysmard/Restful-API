@@ -3,7 +3,9 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Fabricante;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
+
 
 class FabricanteController extends Controller {
 
@@ -20,8 +22,14 @@ class FabricanteController extends Controller {
 
 	public function index()
 	{
-		$fabricantes = Fabricante::all();
-		return response()->json(['datos' => $fabricantes],200);
+		$fabricantes = Cache::remember('fabricantes', 15/16,function()
+		{
+			return Fabricante::simplePaginate(15);			
+		});
+		
+
+		return response()->json(['Siguiente' => $fabricantes->nextPageUrl(), 'Anterior'=> 
+			$fabricantes->previousPageUrl(),'datos' => $fabricantes->items()],200);
 	}
 
 	/**
