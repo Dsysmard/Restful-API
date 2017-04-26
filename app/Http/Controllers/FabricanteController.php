@@ -22,7 +22,7 @@ class FabricanteController extends Controller {
 
 	public function index()
 	{
-		$fabricantes = Cache::remember('fabricantes', 15/16,function()
+		$fabricantes = Cache::remember('fabricantes', 15/60,function()
 		{
 			return Fabricante::simplePaginate(15);			
 		});
