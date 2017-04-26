@@ -95,7 +95,7 @@ class FabricanteVehiculoController extends Controller {
 	 */
 	public function update($idFabricante, $idVehiculo)
 	{
-		//
+		return "Estoy en update";
 	}
 
 	/**

@@ -31,7 +31,7 @@ class FabricanteController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-	
+
 		if (!$request->input('nombre') || !$request->input('telefono')) {
 			return response()->json(['Mensaje' => 'NO pueden se procesar los valores', 'Codigo' => 422],422);
 		}
@@ -61,9 +61,44 @@ class FabricanteController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
-		//
+		$metodo = $request->method();
+		$fabricante = Fabricante::find($id);
+		if (!$fabricante) 
+		{
+			return response()->json(['Mensaje' => 'NO se encuentra este fabricante', 'Codigo' => 404],404);
+		}
+		if ($metodo === 'PATCH') 
+		{
+			$nombre = $request->input('nombre');
+
+			if ($nombre != null && $nombre !='') 
+			{
+				$fabricante->nombre = $nombre;
+			}
+
+			$telefono = $request->input('telefono');
+
+			if ($telefono != null && $telefono !='') 
+			{
+				$fabricante->telefono = $telefono;
+			}
+
+			$fabricante->save();
+			return response()->json(['mensaje' => 'Fabricante editado'],200);
+		}
+		$nombre = $request->input('nombre');
+		$telefono = $request->input('telefono');
+		
+		if (!$nombre || !$telefono) 
+		{
+			return response()->json(['Mensaje' => 'NO pueden se procesar los valores', 'Codigo' => 422],422);
+		}
+		$fabricante->nombre = $nombre;
+		$fabricante->telefono = $telefono;
+		$fabricante->save();
+		return response()->json(['mensaje' => 'Fabricante editado'],200);
 	}
 
 	/**
@@ -74,7 +109,7 @@ class FabricanteController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		return "Estoy en destroy";
 	}
 
 }
